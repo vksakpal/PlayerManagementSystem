@@ -1,0 +1,82 @@
+﻿@using PlayerManagementSystem.Models
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Player Management System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap" rel="stylesheet">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jQueryDataTable")
+    @Scripts.Render("~/bundles/datepicker")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/chart")
+    @Scripts.Render("~/bundles/site")
+
+    @{
+        UserModel userModel = null;
+        var identity = HttpContext.Current.User;
+        if (identity is PrincipalModel)
+        {
+            userModel = ((PrincipalModel)(HttpContext.Current.User)).User;
+        }
+    }
+
+</head>
+<body>
+    @if (userModel != null && HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        <div class="navbar navbar-inverse navbar-fixed-top navbar-pms">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Player Management System", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Player Management", "PlayerListView", "PlayerManagement")</li>
+                        <li>@Html.ActionLink("Team Management", "TeamListView", "TeamManagement")</li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                Reports
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu navbardropdown-pms">
+                                <li>@Html.ActionLink("Graph - Weight and Height", "Graph", "Report")</li>
+                                <li>@Html.ActionLink("Histogram - Age group", "Histogram", "Report")</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#"><span class="glyphicon glyphicon-user"></span> <span style="text-transform:capitalize;">@userModel.Name</span></a></li>
+                        <li><a href="@Url.Action("Logout","Auth")"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    }
+    else
+    {
+        <div class="row form-group">
+            <div class="col-md-12">
+                @Html.ActionLink("Login", "Login", "Auth", new { area = "" }, new { @class = "navbar-brand custom-navbar-brand" })
+            </div>
+        </div>
+    }
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Player Management System</p>
+        </footer>
+    </div>
+</body>
+</html>

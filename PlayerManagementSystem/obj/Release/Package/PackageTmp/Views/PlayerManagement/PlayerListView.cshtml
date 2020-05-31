@@ -1,0 +1,178 @@
+﻿
+@{
+    ViewBag.Title = "Player Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="modal fade" id="popupdiv" tabindex="-1" role="dialog">
+</div>
+
+<h2 class="header-pms">Player List</h2>
+<div>
+    <div class="row">
+        <table id="table_id" class="table table-bordered grid-data-pms">
+            <thead>
+                <tr>
+                    <th>ID number</th>
+                    <th>Name</th>
+                    <th>Date of birth</th>
+                    <th>Height(cms)</th>
+                    <th>Weight(kg)</th>
+                    <th>Place of birth</th>
+                    <th>Age</th>
+                    <th>Assigned team</th>
+                    <th class="text-center"></th>
+                    <th class="text-center"></th>
+                    <th class="text-center"></th>
+                </tr>
+            </thead>
+        </table>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(document).on(".closepopup", "click", function () {
+            debugger;
+            $(this).parent(".modal").modal('hide');
+        });
+
+
+        $('#table_id').dataTable(
+            {
+                "processing": true,
+                "serverSide": true,
+                "filter": true,
+                "orderMulti": false,
+                "ajax": {
+                    "url": "@Url.Action("GetPlayerList", "PlayerManagement")",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [8, 9, 10],
+                    "sortable": false
+                },
+                {
+                    targets: [3,4], render: function (data) {
+                        return parseFloat(data).toFixed(2);
+                    }
+                }],
+                "columns": [
+                    { "data": "IDNumber", "name": "IDNumber", "autoWidth": true },
+                    { "data": "PlayerName", "name": "PlayerName", "autoWidth": true },
+                    { "data": "DateOfBirth", "name": "DateOfBirth", "autoWidth": true },
+                    { "data": "Height", "name": "Height", "autoWidth": true },
+                    { "data": "Weight", "name": "Weight", "autoWidth": true },
+                    { "data": "PlaceOfBirth", "name": "PlaceOfBirth", "autoWidth": true },
+                    { "data": "Age", "name": "Age", "autoWidth": true },
+                    { "data": "AssignedTeam", "name": "AssignedTeam", "autoWidth": true },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            return "<button title='Edit' class='btn btn-pms' onclick=ShowPopup('" + row.IDNumber + "');><i class='glyphicon glyphicon-pencil'></i></button>";
+                        } },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            return "<button title='Delete' class='btn btn-pms' onclick=DeleteData('" + row.IDNumber + "');><i class='glyphicon glyphicon-trash'></i></button>";
+
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            return "<button title='View information' type='button' data-id=" + row.IDNumber + " class='btn btn-pms info'><i class='glyphicon glyphicon-info-sign'></i></button>";
+                        }
+                    }
+                ]
+            }
+        );
+
+        $("div[id$='_filter']").append("<button type='button' id='btnAddPlayer' onclick='ShowPopup(null);' style='margin-left: 10px;margin-right: 5px;' class='btn btn-sm btn-pms'>Add Player</button>");
+
+        $(document).on("click",".info",  function () {
+            var playerId = $(this).attr("data-id");
+
+            $.ajax({
+                url: '@Url.Action("PlayerInformationView","PlayerManagement")',
+                type: 'GET',
+                dataType:'html',
+                data: { 'playerId': playerId },
+                success: function (data) {
+                    $('#popupdiv').empty();
+                    $('#popupdiv').html(data);
+                    $('#popupdiv').modal({
+                        keyboard: true,
+                        backdrop: 'static',
+                        show: true
+                    });
+                },
+                error: function (err) {
+                    debugger;
+                    alert("Something went wrong...!!!");
+                }
+            })
+        });
+
+    });
+
+
+
+
+    function ShowPopup(model) {
+
+        var url;
+        if (model == null) {
+            url = '@Url.Action("EditPlayerView", "PlayerManagement",new { playerID = 0})';
+        }
+        else {
+            url = '@Url.Action("EditPlayerView", "PlayerManagement",new { playerID = 1})';
+            url = url.replace("1", model);
+        }
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (data) {
+                $('#popupdiv').empty();
+                $('#popupdiv').html(data);
+                $('#popupdiv').modal({
+                    keyboard: true,
+                    backdrop: 'static',
+                    show: true
+                });
+            },
+            error: function () {
+                alert("Something went wrong...!!!");
+            }
+        });
+    }
+
+    function DeleteData(PlayerID) {
+        if (confirm("Are you sure you want to delete ...?")) {
+            Delete(PlayerID);
+        } else {
+            return false;
+        }
+    }
+
+    function Delete(PlayerID) {
+            var url = '@Url.Action("DeletePlayer", "PlayerManagement")' ;
+
+            $.post(url, { PlayerID: PlayerID }, function(data) {
+                    if (data) {
+                        oTable = $('#table_id').DataTable();
+                        oTable.draw();
+                    } else {
+                        alert("Something Went Wrong!");
+                    }
+                });
+            }
+</script>
+
+
+
+

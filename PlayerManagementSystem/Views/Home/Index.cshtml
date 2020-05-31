@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+    <div class="row" style="margin-top:15px;">
+        <div class="col-md-3">
+            @Html.ActionLink("Goto Player Management", "PlayerListView", "PlayerManagement",null, new { @class = "form-control card-pms btn-pms" })
+        </div>
+        <div class="col-md-3">
+            @Html.ActionLink("Goto Team Management", "TeamListView", "TeamManagement", null, new { @class = "form-control card-pms btn-pms" })
+        </div>
+        <div class="col-md-3">
+            @Html.ActionLink("Goto Graph", "Graph", "Report", null, new { @class = "form-control card-pms btn-pms" })
+        </div>
+        <div class="col-md-3">
+            @Html.ActionLink("Goto Histogram", "Histogram", "Report", null, new { @class = "form-control card-pms btn-pms" })
+            
+        </div>
+    </div>

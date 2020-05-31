@@ -1,0 +1,93 @@
+﻿@{
+    string content = ViewBag.Content;
+    string teamName = ViewBag.TeamName;
+}
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header modal-title-pms">                 
+            <div class="row">
+                <div class="col-md-8" style="padding-top:5px;">
+                    <h4 class="modal-title" id="exampleModalLabel">Edit Team Information</h4>
+                </div>
+                <div class="col-md-4 text-right">
+                    <button type="button" class="btn btn-default closepopup">Close</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="row form-group">
+                <div class="col-md-9">
+                    <label style="display:inline-block;">Upload Information:</label>
+                    <input style="display:inline;" type="file" id="teamInfo" />
+                </div>
+
+                <div class="col-md-3 text-right">
+                    <button type="button" class="btn btn-pms" id="btnSave" title="Save"><i class="glyphicon glyphicon-save"></i></button>
+                    <a class="btn btn-pms" title="Download" href='@Url.Action("Download", "TeamManagement", new { teamName = teamName })'><i class="glyphicon glyphicon-download"></i></a>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-12">
+                    @Html.TextArea("txtTeamInfo", content, 25, 150, new { @class = "form-control" })
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(".closepopup").click(function () {
+            $(this).parents(".modal").modal('hide');
+        });
+
+
+        document.getElementById('teamInfo').addEventListener('change', readFile, false);
+
+        $("#btnSave").click(function () {
+            var data = {
+                "teamName": '@teamName',
+                "content": $("#txtTeamInfo").val()
+            }
+
+            $.ajax({
+                url: '@Url.Action("SaveTeamInformation","TeamManagement")',
+                type: 'Post',
+                data: JSON.stringify( data),
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data) {
+                        alert("Team information is saved successfully.");
+                    }
+                    else {
+                        alert("Failed to save team information.");
+                    }
+                },
+                error: function () {
+                    alert("Something went wrong");
+                }
+
+            });
+
+        });
+    });
+
+    function readFile(evt) {
+        var files = evt.target.files;
+        var file = files[0];
+        if (file.name.endsWith("txt")) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                $("#txtTeamInfo").val(event.target.result);
+            }
+            reader.readAsText(file);
+            return true;
+        }
+        alert("Please select valid file format. Valid file format is '.txt'.");
+        $("#teamInfo").val('');
+        return false;
+    }
+</script>
+

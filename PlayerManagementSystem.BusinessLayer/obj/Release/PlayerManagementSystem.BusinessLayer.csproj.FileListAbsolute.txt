@@ -1,0 +1,11 @@
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.BusinessLayer\bin\Release\PlayerManagementSystem.BusinessLayer.dll
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.BusinessLayer\bin\Release\PlayerManagementSystem.BusinessLayer.pdb
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.BusinessLayer\bin\Release\PlayerManagementSystem.DataAccessLayer.dll
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.BusinessLayer\bin\Release\PlayerManagementSystem.Models.dll
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.BusinessLayer\bin\Release\PlayerManagementSystem.DataAccessLayer.pdb
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.BusinessLayer\bin\Release\PlayerManagementSystem.Models.pdb
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.BusinessLayer\obj\Release\PlayerManagementSystem.BusinessLayer.csprojAssemblyReference.cache
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.BusinessLayer\obj\Release\PlayerManagementSystem.BusinessLayer.csproj.CoreCompileInputs.cache
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.BusinessLayer\obj\Release\PlayerManagementSystem.BusinessLayer.csproj.CopyComplete
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.BusinessLayer\obj\Release\PlayerManagementSystem.BusinessLayer.dll
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.BusinessLayer\obj\Release\PlayerManagementSystem.BusinessLayer.pdb

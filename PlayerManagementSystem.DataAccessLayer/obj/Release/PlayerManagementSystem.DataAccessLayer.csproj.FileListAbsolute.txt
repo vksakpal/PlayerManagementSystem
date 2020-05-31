@@ -1,0 +1,9 @@
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.DataAccessLayer\bin\Release\PlayerManagementSystem.DataAccessLayer.dll
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.DataAccessLayer\bin\Release\PlayerManagementSystem.DataAccessLayer.pdb
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.DataAccessLayer\bin\Release\PlayerManagementSystem.Models.dll
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.DataAccessLayer\bin\Release\PlayerManagementSystem.Models.pdb
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.DataAccessLayer\obj\Release\PlayerManagementSystem.DataAccessLayer.csprojAssemblyReference.cache
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.DataAccessLayer\obj\Release\PlayerManagementSystem.DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.DataAccessLayer\obj\Release\PlayerManagementSystem.DataAccessLayer.csproj.CopyComplete
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.DataAccessLayer\obj\Release\PlayerManagementSystem.DataAccessLayer.dll
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.DataAccessLayer\obj\Release\PlayerManagementSystem.DataAccessLayer.pdb

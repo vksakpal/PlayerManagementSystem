@@ -1,0 +1,11 @@
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.Models\bin\Debug\PlayerManagementSystem.Models.dll
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.Models\bin\Debug\PlayerManagementSystem.Models.pdb
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.Models\obj\Debug\PlayerManagementSystem.Models.csproj.CoreCompileInputs.cache
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.Models\obj\Debug\PlayerManagementSystem.Models.dll
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.Models\obj\Debug\PlayerManagementSystem.Models.pdb
+C:\Users\Deepa\Desktop\PlayerManagementSystem\PlayerManagementSystem.Models\bin\Debug\PlayerManagementSystem.Models.dll
+C:\Users\Deepa\Desktop\PlayerManagementSystem\PlayerManagementSystem.Models\bin\Debug\PlayerManagementSystem.Models.pdb
+C:\Users\Deepa\Desktop\PlayerManagementSystem\PlayerManagementSystem.Models\obj\Debug\PlayerManagementSystem.Models.csprojAssemblyReference.cache
+C:\Users\Deepa\Desktop\PlayerManagementSystem\PlayerManagementSystem.Models\obj\Debug\PlayerManagementSystem.Models.csproj.CoreCompileInputs.cache
+C:\Users\Deepa\Desktop\PlayerManagementSystem\PlayerManagementSystem.Models\obj\Debug\PlayerManagementSystem.Models.dll
+C:\Users\Deepa\Desktop\PlayerManagementSystem\PlayerManagementSystem.Models\obj\Debug\PlayerManagementSystem.Models.pdb

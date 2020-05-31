@@ -1,0 +1,24 @@
+﻿@model PlayerManagementSystem.UI.Models.LoginModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+
+
+<div class="login-page">
+    <h3 style="text-align:center;">        
+        <span style="color:#fff;text-decoration:none;">Player Management System</span>
+    </h3>
+    <div class="form">
+        @using (Html.BeginForm("ValidateUser", "Auth", FormMethod.Post, new { @class = "login-form" }))
+        {
+            @Html.AntiForgeryToken();            
+            @Html.TextBoxFor(model => model.UserName, new { placeholder = "username" })
+            @Html.PasswordFor(model => model.Password, new { placeholder = "password" })
+            <button class="btn btn-pms">login</button>            
+        }
+    </div>
+</div>
+
+

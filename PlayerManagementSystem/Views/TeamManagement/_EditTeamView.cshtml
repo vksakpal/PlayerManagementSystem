@@ -1,0 +1,110 @@
+﻿@model PlayerManagementSystem.Models.TeamModel
+
+@using (Html.BeginForm("SaveTeamDetails", "TeamManagement", FormMethod.Post, new { id = "frmTeam" }))
+{
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-title-pms">
+                <h4 class="modal-title" id="exampleModalLabel">Edit Team Information</h4>                
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="container-fluid">
+
+                        @Html.HiddenFor(model => model.TeamID)
+
+                        <div class="row form-group">
+                            <div class="col-md-3">Team name</div>
+                            <div class="col-md-9">@Html.TextBox("TeamName", null, new { @class = "form-control" })</div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">Ground</div>
+                            <div class="col-md-9">@Html.TextBox("Ground", null, new { @class = "form-control" })</div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">Coach</div>
+                            <div class="col-md-9">@Html.TextBox("Coach", null, new { @class = "form-control" })</div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">Founded year</div>
+                            <div class="col-md-9">@Html.TextBox("FoundedYear", null, new { @class = "form-control" })</div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">Region</div>
+                            <div class="col-md-9">@Html.TextBox("Region", null, new { @class = "form-control" })</div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-pms" id="btnSaveTeam">Save</button>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnSaveTeam").click(function () {
+
+            if ($.trim($("#TeamName").val()) == "") {
+                alert("Please enter valid name");
+                return false;
+            }
+
+            if ($.trim($("#Ground").val()) == "") {
+                alert("Please enter valid ground");
+                return false;
+            }
+
+            if ($.trim($("#Coach").val()) == "") {
+                alert("Please enter valid coach");
+                return false;
+            }
+
+            if ($.trim($("#FoundedYear").val()) == "") {
+                alert("Please enter valid founded year");
+                return false;
+            }
+
+            if ($.trim($("#Region").val()) == "") {
+                alert("Please enter valid region");
+                return false;
+            }
+
+            var data = {
+                "TeamID": $("#TeamID").val(),
+                "TeamName": $("#TeamName").val(),
+                "Ground": $("#Ground").val(),
+                "Coach": $("#Coach").val(),
+                "FoundedYear": $("#FoundedYear").val(),
+                "Region": $("#Region").val()
+            };
+            $.ajax({
+                url: '@Url.Action("SaveTeamDetails", "TeamManagement")',
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify( data),
+                success: function (data) {                    
+                    if (data == 1) {
+                        alert("Team details saved sucessfully.");
+                        $('#editTeamModel').modal('hide');
+                        oTable = $('#table_id').DataTable();
+                        oTable.draw();
+                    }
+                    else if (data == 3) {
+                        alert("Team with name '" + $("#TeamName").val() + "' already exist.");
+                    }
+                    else {
+                        alert('Something went wrong');
+                    }
+                },
+                error: function () {
+                    alert('Something went wrong');
+                }
+            })
+        });
+    });
+</script>

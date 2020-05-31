@@ -1,0 +1,151 @@
+﻿@model PlayerManagementSystem.Models.PlayerModel
+
+@using (Html.BeginForm("SavePlayerDetails", "PlayerManagement", FormMethod.Post, new { id = "frmPlayer" }))
+{
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-title-pms">
+                <h4 class="modal-title" id="exampleModalLabel">Edit Player Details</h4>               
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="container-fluid">
+
+                        @Html.HiddenFor(model => model.AssignedTeam)
+
+                        @if (Model.IDNumber > 0)
+                        {
+                            <div class="row form-group">
+                                <div class="col-md-3">ID Number</div>
+                                <div class="col-md-9">@Html.TextBox("IDNumber", Model.IDNumber, new { @class = "form-control", @readonly = true }) </div>
+                            </div>
+                        }
+
+                        <div class="row form-group">
+                            <div class="col-md-3">Name</div>
+                            <div class="col-md-9">@Html.TextBox("PlayerName", Model.PlayerName, new { @class = "form-control" })</div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">Date of birth</div>
+                            <div class="col-md-9">@Html.TextBox("DateOfBirth", Model.DateOfBirth, new { @class = "form-control", @id = "datepicker" })</div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">Height</div>
+                            <div class="input-group col-md-9" style="padding-left:15px;padding-right:15px;">
+                                @Html.TextBox("Height", string.Format("{0:0.00}", Model.Height), new { @class = "form-control numeric" })
+                                <span class="input-group-addon">cms</span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">Weight</div>
+                            <div class="input-group col-md-9" style="padding-left:15px;padding-right:15px;">
+                                @Html.TextBox("Weight", string.Format("{0:0.00}", Model.Weight), new { @class = "form-control numeric" })
+                                <span class="input-group-addon">kg</span>
+                            </div>
+                            
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">Place of birth</div>
+                            <div class="col-md-9">@Html.TextBox("PlaceOfBirth", Model.PlayerName, new { @class = "form-control" })</div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">Assigned team</div>
+                            <div class="col-md-9">
+                                <select id="cboAssignedTeam" class="Input" style="width: 100%;height: 30px;">
+                                    <option value="0" selected="selected">Select</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-pms" id="btnSavePlayer">Save</button>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(".numeric").ForceNumericOnly();
+       
+        $.ajax({
+            url:'@Url.Action("GetTeamList", "PlayerManagement")',
+            datatype: "JSON",
+            type: "Get",
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    var opt = new Option(data[i].TeamName, data[i].TeamID);
+                    $("#cboAssignedTeam").append(opt);
+                }                
+                $("#cboAssignedTeam").find('option[value=0]').removeAttr('selected');
+                $("#cboAssignedTeam").find('option[value=@Model.AssignedTeam]').attr('selected', 'selected')
+            }
+        });
+
+        $('#datepicker').datetimepicker({
+            format: 'YYYY-MM-DD'
+        });
+
+        $("#btnSavePlayer").click(function () {
+
+            if ($.trim($("#PlayerName").val()) == "") {
+                alert("Please enter valid name");
+                return false;
+            }
+                       
+            var date = $('#datepicker').val();
+
+            if (date =='') {
+                alert("Please enter valid date of birth");
+                return false;
+            }
+
+            if ($.trim($("#Height").val()) == "") {
+                alert("Please enter valid height");
+                return false;
+            }
+
+            if ($.trim($("#Weight").val()) == "") {
+                alert("Please enter valid weight");
+                return false;
+            }
+
+            if ($.trim($("#PlaceOfBirth").val()) == "") {
+                alert("Please enter valid place of birth");
+                return false;
+            }
+            
+            var data = {
+                "IDNumber": $("#IDNumber").val(),
+                "PlayerName": $("#PlayerName").val(),
+                "DateOfBirth": date,
+                "Height": $("#Height").val(),
+                "Weight": $("#Weight").val(),
+                "PlaceOfBirth": $("#PlaceOfBirth").val(),
+                "AssignedTeam": $("#cboAssignedTeam").val()
+            };
+            $.ajax({
+                url: '@Url.Action("SavePlayerDetails", "PlayerManagement")',
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify( data),
+                success: function (data) {                    
+                    if (data == true) {
+                        alert("Player details saved sucessfully.");
+                        $('#popupdiv').modal('hide');
+                        oTable = $('#table_id').DataTable();
+                        oTable.draw();
+                    }
+                },
+                error: function () {
+                    alert('Something went wrong');
+                }
+            })
+        });
+    });
+</script>

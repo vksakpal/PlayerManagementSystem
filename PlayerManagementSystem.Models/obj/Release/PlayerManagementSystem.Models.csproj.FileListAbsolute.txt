@@ -1,0 +1,6 @@
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.Models\bin\Release\PlayerManagementSystem.Models.dll
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.Models\bin\Release\PlayerManagementSystem.Models.pdb
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.Models\obj\Release\PlayerManagementSystem.Models.csprojAssemblyReference.cache
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.Models\obj\Release\PlayerManagementSystem.Models.csproj.CoreCompileInputs.cache
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.Models\obj\Release\PlayerManagementSystem.Models.dll
+D:\Projects\PlayerManagementSystem\PlayerManagementSystem.Models\obj\Release\PlayerManagementSystem.Models.pdb

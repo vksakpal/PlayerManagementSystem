@@ -1,0 +1,86 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+.btn-pms {
+    background-color: #037971!important;
+    color: #fff;
+}
+
+    .btn-pms:hover, .btn-pms:focus, .btn-pms:active {
+        background-color: #049A8F;
+        color: #fff;
+    }
+
+.navbar-pms {
+    background-color: #037971;
+    border-color: #52796f;
+    color: #fff !important;
+}
+
+.navbar-pms a
+{
+    color: #fff!important;
+}
+
+.navbardropdown-pms {
+    background-color: #037971;
+    color: #fff;
+}
+
+    .navbardropdown-pms > li > a:hover {
+        background-color: #84a98c;
+    }
+
+
+.header-pms {
+    background-color: #037971;
+    color: #fff;
+    padding: 10px 10px;
+    margin-left: -15px;
+    margin-right: -15px;    
+    border-radius: 5px;
+    margin-top:10px;
+}
+
+.grid-data-pms thead tr {
+    background: #037971;
+    color: #fff;
+}
+
+.modal-title-pms {
+    background: #037971;
+    color: #fff;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #037971 !important;
+    border-color: #037971 !important;
+}
+
+.card-pms {
+    text-align: center;
+    padding-top: 35px;
+    height: 100px;
+    box-shadow: 5px 5px #CAD2C5;
+}

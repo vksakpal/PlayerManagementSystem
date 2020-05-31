@@ -1,0 +1,214 @@
+﻿
+@{
+    ViewBag.Title = "Team Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2 class="header-pms">Team List</h2>
+
+<div>    
+    <div class="row">
+        <table id="table_id" class="table table-bordered grid-data-pms">
+            <thead>
+                <tr>
+                    <th>Team ID</th>
+                    <th>Name</th>
+                    <th>Ground</th>
+                    <th>Coach</th>
+                    <th>Founded year</th>
+                    <th>Region</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="editTeamModel" tabindex="-1" role="dialog">
+</div>
+
+<div class="modal fade" id="teamInfopopup" tabindex="-1" role="dialog">
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#table_id').dataTable(
+            {
+                "processing": true,
+                "serverSide": true,
+                "filter": true,
+                "orderMulti": false,
+                "ajax": {
+                    "url": "@Url.Action("GetTeamList", "TeamManagement")",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs": [{
+                    "targets": [0],
+                    "visible": false
+                },
+                    {
+                        "targets": [6,7,8,9,10],
+                        "sortable": false
+                    }],
+                "columns": [
+                    { "data": "TeamID", "name": "TeamID", "autoWidth": true },
+                    { "data": "TeamName", "name": "TeamName", "autoWidth": true },
+                    { "data": "Ground", "name": "Ground", "autoWidth": true },
+                    { "data": "Coach", "name": "Coach", "autoWidth": true },
+                    { "data": "FoundedYear", "name": "FoundedYear", "autoWidth": true },
+                    { "data": "Region", "name": "Region", "autoWidth": true },                    
+                    {
+                        data: null,
+                        "width": "30px",
+                        render: function (data, type, row) {                            
+                            return "<button title='Edit' type='button' onclick=ShowPopup('" + row.TeamID + "'); class='btn btn-pms'><i class='glyphicon glyphicon-pencil'></i></button>";
+                        }
+                    },
+                    {
+                        data: null,
+                        "width": "40px",
+                        render: function (data, type, row) {                            
+                            return "<button title='Delete' type='button' onclick=DeleteData('" + row.TeamID + "'); class='btn btn-pms'><i class='glyphicon glyphicon-trash'></i></button>";
+                        }
+                    },
+                    {
+                        data: null,
+                        "width": "30px",
+                        render: function (data, type, row) {
+                            return "<button type='button' title='View Team Information' data-name=" + row.TeamName.replace(" ", "_") + " class='btn btn-pms info'><i class='glyphicon glyphicon-info-sign'></i></button>";
+                        }
+                    },
+                    {
+                        data: null,
+                        "width": "100px",
+                        render: function (data, type, row) {
+                            return "<a href='#' class='btn btn-pms' title='View team players' onclick=ShowTeamMembers('" + row.TeamID + "'); >Team members</a>";
+                        }
+                    },
+                    {
+                        data: null,
+                        "width": "40px",
+                        render: function (data, type, row) {
+                            return "<a href='#' class='btn btn-pms' title='Assign team players'  onclick=AssignMembers('" + row.TeamID + "'); >Assign members</a>";
+                        }
+                    }
+                    
+                ]
+            }
+        );
+
+        $("div[id$='_filter']").append("<button type='button' id='btnAddTeam' onclick='ShowPopup(null);' style='margin-left: 10px;margin-right: 5px;' class='btn btn-sm btn-pms'>Add Team</button>");
+        $('#table_id').on("click", ".info", function () {
+            var teamName = $(this).attr("data-name");            
+            $.ajax({
+                url: '@Url.Action("TeamInformationView","TeamManagement")',
+                type: "GET",
+                data: {"teamName": teamName},
+                success: function (data) {
+                    $('#teamInfopopup').empty();
+                    $('#teamInfopopup').html(data);
+                    $('#teamInfopopup').modal({
+                        keyboard: true,
+                        backdrop: 'static',
+                        show: true
+                    });
+
+                }
+            })
+        });
+    });
+
+    function ShowTeamMembers(TeamID) {
+        var url = '@Url.Action("TeamMembersView", "TeamManagement")';
+        url = url + "?TeamID=" + TeamID;
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (data) {
+                $('#editTeamModel').empty();
+                $('#editTeamModel').html(data);
+                $('#editTeamModel').modal({
+                    keyboard: true,
+                    backdrop: 'static',
+                    show: true
+                });
+            }
+        })
+    }
+
+    function AssignMembers(TeamID) {      
+        var url = '@Url.Action("NotAssignedMembersView", "TeamManagement")';
+        url = url + "?TeamID=" + TeamID;
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (data) {
+                $('#editTeamModel').empty();
+                $('#editTeamModel').html(data);
+                $('#editTeamModel').modal({
+                    keyboard: true,
+                    backdrop: 'static',
+                    show: true
+                });
+            }
+        })
+    }
+
+        function ShowPopup(model) {
+
+            var url;
+            if (model == null) {
+                url = '@Url.Action("EditTeamView", "TeamManagement",new { teamID = 0})';
+            }
+            else {
+                url = '@Url.Action("EditTeamView", "TeamManagement", new { teamID = 1})';
+                url = url.replace("1", model);
+            }
+
+        $.ajax({
+            url: url,
+            type: "GET",
+
+            success: function (data) {
+                $('#editTeamModel').empty();
+                $('#editTeamModel').html(data);
+                $('#editTeamModel').modal({
+                    keyboard: true,
+                    backdrop: 'static',
+                    show: true
+                });
+                }
+            });
+        }
+
+        function DeleteData(TeamID) {
+            if (confirm("Are you sure you want to delete ...?")) {
+                Delete(TeamID);
+            } else {
+                return false;
+            }
+        }
+
+        function Delete(TeamID) {
+            var url = '@Url.Action("DeleteTeam", "TeamManagement")' ;
+
+            $.post(url, { TeamID: TeamID }, function(data) {
+                if (data) {
+                    oTable = $('#table_id').DataTable();
+                    oTable.draw();
+                } else {
+                    alert("Something Went Wrong!");
+                }
+            });
+        }
+</script>
+
